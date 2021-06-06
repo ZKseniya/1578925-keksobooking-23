@@ -90,5 +90,3 @@ similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) => {
   return {author, offers, location};
 
 });
-
-console.log(similarAds);
