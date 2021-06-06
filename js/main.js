@@ -35,7 +35,6 @@ function getRandomPositiveInteger (firstNumber, secondNumber) {
 
 // Генерация данных
 
-let similarAds = [];
 const LOCATION_LAT_MIN = 35.65000;
 const LOCATION_LAT_MAX = 35.70000;
 const LOCATION_LNG_MIN = 139.70000;
@@ -63,7 +62,7 @@ const getRandomArray = (array) => {
   return newArray.slice(getRandomPositiveInteger(0, array.length - 1));
 };
 
-similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) => {
+const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) => {
   const location = {
     lat : getRandomArbitrary(LOCATION_LAT_MIN, LOCATION_LAT_MAX),
     lng : getRandomArbitrary(LOCATION_LNG_MIN, LOCATION_LNG_MAX),
@@ -84,9 +83,12 @@ similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) => {
   };
 
   const author = {
-    avatar : 'img/avatars/user_0' + (index + 1) + '.png',
+    avatar : `img/avatars/user_0${  index + 1  }.png`,
   };
 
   return {author, offers, location};
 
 });
+
+similarAds;
+
