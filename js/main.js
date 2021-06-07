@@ -1,6 +1,42 @@
-// Случайное положительное число с плавающей запятой
+const loc = {
+  LAT : {
+    MIN : 35.65000,
+    MAX : 35.70000,
+  },
+  LNG : {
+    MIN : 139.70000,
+    MAX : 139.80000,
+  },
+  NUMBER_OF_DEMICAL : 5,
+};
 
-function getRandomArbitrary(firstNumber, secondNumber, numberOfDemicalPlace = 2) {
+const priceRange = {
+  MIN : 500,
+  MAX : 2000,
+};
+
+const roomCapacity = {
+  MIN : 1,
+  MAX : 3,
+};
+
+const guestCapacity = {
+  MIN : 1,
+  MAX : 5,
+};
+
+const SIMILAR_AD_COUNT = 10;
+const TYPE = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const TIME = ['12:00', '13:00', '14:00'];
+const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const PHOTOS = [
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
+];
+
+// Случайное положительное число с плавающей запятой
+function getRandomArbitrary(firstNumber, secondNumber, numberOfDemicalPlace = 0) {
 
   if (firstNumber === undefined || secondNumber === undefined) {
     throw new Error('Ошибка! Диапазон не определен. Нужно ввести два числа');
@@ -23,58 +59,27 @@ function getRandomArbitrary(firstNumber, secondNumber, numberOfDemicalPlace = 2)
   return parseFloat(number);
 }
 
-// Случайное целое положительное число
-
-function getRandomPositiveInteger (firstNumber, secondNumber) {
-  const lower = Math.ceil(Math.min(Math.abs(firstNumber), Math.abs(secondNumber)));
-  const upper = Math.floor(Math.max(Math.abs(firstNumber), Math.abs(secondNumber)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-}
-
 // Генерация данных
-
-const LOCATION_LAT_MIN = 35.65000;
-const LOCATION_LAT_MAX = 35.70000;
-const LOCATION_LNG_MIN = 139.70000;
-const LOCATION_LNG_MAX = 139.80000;
-const PRICE_MIN = 500;
-const PRICE_MAX = 2000;
-const ROOM_MIN = 1;
-const ROOM_MAX = 3;
-const GUESTS_MIN = 1;
-const GUESTS_MAX = 5;
-const SIMILAR_AD_COUNT = 10;
-const TYPE = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-const TIME = ['12:00', '13:00', '14:00'];
-const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const PHOTOS = [
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
-];
-
-const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
+const getRandomArrayElement = (elements) => elements[Math.round(getRandomArbitrary(0, elements.length - 1))];
 
 const getRandomArray = (array) => {
   const newArray = array.sort(() => Math.random() - 0.5);
-  return newArray.slice(getRandomPositiveInteger(0, array.length - 1));
+  return newArray.slice(Math.round(getRandomArbitrary(0, array.length - 1)));
 };
 
 const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) => {
   const location = {
-    lat : getRandomArbitrary(LOCATION_LAT_MIN, LOCATION_LAT_MAX),
-    lng : getRandomArbitrary(LOCATION_LNG_MIN, LOCATION_LNG_MAX),
+    lat : getRandomArbitrary(loc.LAT.MIN, loc.LAT.MAX, loc.NUMBER_OF_DEMICAL),
+    lng : getRandomArbitrary(loc.LNG.MIN, loc.LNG.MAX, loc.NUMBER_OF_DEMICAL),
   };
 
   const offers = {
     title : `Предложение №${index + 1}`,
     address : `${location.lat  }, ${  location.lng}`,
-    price : `${getRandomPositiveInteger(PRICE_MIN, PRICE_MAX)  } .руб`,
+    price : `${Math.round(getRandomArbitrary(priceRange.MIN, priceRange.MAX))  } руб.`,
     type : getRandomArrayElement(TYPE),
-    room : getRandomPositiveInteger(ROOM_MIN, ROOM_MAX),
-    guests : getRandomPositiveInteger(GUESTS_MIN, GUESTS_MAX),
+    room : Math.round(getRandomArbitrary(roomCapacity.MIN, roomCapacity.MAX)),
+    guests : Math.round(getRandomArbitrary(guestCapacity.MIN, guestCapacity.MAX)),
     checkin : getRandomArrayElement(TIME),
     checkout : getRandomArrayElement(TIME),
     features : getRandomArray(FEATURES),
