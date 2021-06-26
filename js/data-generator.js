@@ -1,4 +1,4 @@
-import {getRandomArbitrary} from './util.js';
+import {getRandomArbitrary, getRandomArray, getRandomArrayElement} from './util.js';
 
 const Coordinate = {
   LAT : {
@@ -37,13 +37,6 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
-const getRandomArrayElement = (elements) => elements[Math.round(getRandomArbitrary(0, elements.length - 1))];
-
-const getRandomArray = (array) => {
-  const newArray = array.sort(() => Math.random() - 0.5);
-  return newArray.slice(Math.round(getRandomArbitrary(0, array.length - 1)));
-};
-
 const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) => {
   const location = {
     lat : getRandomArbitrary(Coordinate.LAT.MIN, Coordinate.LAT.MAX, Coordinate.NUMBER_OF_DEMICAL),
@@ -53,7 +46,7 @@ const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) =
   const offers = {
     title : `Предложение №${index + 1}`,
     address : `${location.lat  }, ${  location.lng}`,
-    price : `${Math.round(getRandomArbitrary(PriceRange.MIN, PriceRange.MAX))  } руб.`,
+    price : `${Math.round(getRandomArbitrary(PriceRange.MIN, PriceRange.MAX))  }`,
     type : getRandomArrayElement(TYPE_OF_HOUSING),
     room : Math.round(getRandomArbitrary(RoomCapacity.MIN, RoomCapacity.MAX)),
     guests : Math.round(getRandomArbitrary(GuestCapacity.MIN, GuestCapacity.MAX)),
@@ -65,11 +58,11 @@ const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) =
   };
 
   const author = {
-    avatar : `img/avatars/user_0${  index + 1  }.png`,
+    avatar : `img/avatars/user0${  index + 1  }.png`,
   };
 
   return {author, offers, location};
 
 });
 
-similarAds;
+export {similarAds};

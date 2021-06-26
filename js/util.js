@@ -22,4 +22,11 @@ function getRandomArbitrary(firstNumber, secondNumber, numberOfDemicalPlace = 0)
   return parseFloat(number);
 }
 
-export {getRandomArbitrary};
+const getRandomArrayElement = (elements) => elements[Math.round(getRandomArbitrary(0, elements.length - 1))];
+
+const getRandomArray = (array) => {
+  const newArray = array.sort(() => Math.random() - 0.5);
+  return newArray.slice(Math.round(getRandomArbitrary(0, array.length - 1)));
+};
+
+export {getRandomArbitrary, getRandomArrayElement, getRandomArray};
