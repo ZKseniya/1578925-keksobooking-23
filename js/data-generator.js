@@ -27,7 +27,6 @@ const GuestCapacity = {
   MAX : 5,
 };
 
-const SIMILAR_AD_COUNT = 10;
 const TYPE_OF_HOUSING = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const CHECK_TIME = ['12:00', '13:00', '14:00'];
 const FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -37,7 +36,7 @@ const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
 
-const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) => {
+const createSimilarAds = (element, index) => {
   const location = {
     lat : getRandomArbitrary(Coordinate.LAT.MIN, Coordinate.LAT.MAX, Coordinate.NUMBER_OF_DEMICAL),
     lng : getRandomArbitrary(Coordinate.LNG.MIN, Coordinate.LNG.MAX, Coordinate.NUMBER_OF_DEMICAL),
@@ -62,7 +61,6 @@ const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) =
   };
 
   return {author, offers, location};
+};
 
-});
-
-export {similarAds};
+export {createSimilarAds};

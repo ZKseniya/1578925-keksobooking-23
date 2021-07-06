@@ -1,6 +1,6 @@
-import {similarAds} from './data-generator.js';
+import {getWordEndings} from './util.js';
 
-const HOUSING_TYPE_DICTIONARY = {
+const HousingTypeDictionary = {
   bungalow : 'Бунгало',
   flat : 'Квартира',
   house : 'Дом',
@@ -8,7 +8,7 @@ const HOUSING_TYPE_DICTIONARY = {
   palace : 'Дворец',
 };
 
-const FEATURES_CLASSES = {
+const FeaturesClasses = {
   wifi : 'popup__feature--wifi',
   dishwasher : 'popup__feature--dishwasher',
   parking : 'popup__feature--parking',
@@ -17,45 +17,35 @@ const FEATURES_CLASSES = {
   conditioner : 'popup__feature--conditioner',
 };
 
-const PHOTOS_DATA = {
-  width : 45,
-  height : 40,
-  alt : 'Фотография жилья',
+const PhotosData = {
+  WIDTH : 45,
+  HEIGHT : 40,
+  ALT : 'Фотография жилья',
 };
 
-const arrayAds = [];
-let similarAdTemplate = document.querySelector('#card').content;
-
-const createAd = function(ad) {
+const createAd = function(similarAd) {
+  let similarAdTemplate = document.querySelector('#card').content;
   similarAdTemplate = similarAdTemplate.cloneNode(true);
   const adPrice = similarAdTemplate.querySelector('.popup__text--price');
   const amountGuestsAndRooms = similarAdTemplate.querySelector('.popup__text--capacity');
   const checkinAndCheckOut = similarAdTemplate.querySelector('.popup__text--time');
   const featuresList = similarAdTemplate.querySelector('.popup__features');
   const featuresListElements = similarAdTemplate.querySelectorAll('.popup__feature');
-  const featuresDataArray = ad.offers.features;
+  const featuresDataArray = similarAd.offers.features;
   const photoList = similarAdTemplate.querySelector('.popup__photos');
   const photoListElements = similarAdTemplate.querySelectorAll('.popup__photo');
-  const photosDataArray = ad.offers.photos;
+  const photosDataArray = similarAd.offers.photos;
 
-  similarAdTemplate.querySelector('.popup__avatar').src = ad.author.avatar;
-  similarAdTemplate.querySelector('.popup__title').textContent = ad.offers.title;
-  similarAdTemplate.querySelector('.popup__text--address').textContent = ad.offers.address;
-  adPrice.textContent = `${ad.offers.price  } ₽/ночь`;
-  similarAdTemplate.querySelector('.popup__description').textContent = ad.offers.description;
-  similarAdTemplate.querySelector('.popup__type').textContent = HOUSING_TYPE_DICTIONARY[ad.offers.type];
+  similarAdTemplate.querySelector('.popup__avatar').src = similarAd.author.avatar;
+  similarAdTemplate.querySelector('.popup__title').textContent = similarAd.offers.title;
+  similarAdTemplate.querySelector('.popup__text--address').textContent = similarAd.offers.address;
+  adPrice.textContent = `${similarAd.offers.price  } ₽/ночь`;
+  similarAdTemplate.querySelector('.popup__description').textContent = similarAd.offers.description;
+  similarAdTemplate.querySelector('.popup__type').textContent = HousingTypeDictionary[similarAd.offers.type];
+  amountGuestsAndRooms.textContent = `${similarAd.offers.room} ${getWordEndings(similarAd.offers.room, ['комната', 'комнаты', 'комнат'])} для
+  ${similarAd.offers.guests} ${getWordEndings(similarAd.offers.guests, ['гостя', 'гостей'])}`;
 
-  if (ad.offers.room === 1) {
-    if (ad.offers.guests === 1) {
-      amountGuestsAndRooms.textContent = `${ad.offers.room} комната для ${ad.offers.guests } гостя`;
-    } else {
-      amountGuestsAndRooms.textContent = `${ad.offers.room} комната для ${ad.offers.guests } гостей`;
-    }
-  } else {
-    amountGuestsAndRooms.textContent = `${ad.offers.room} комнаты для ${ad.offers.guests } гостей`;
-  }
-
-  checkinAndCheckOut.textContent = `Заезд после ${ad.offers.checkin}, выезд до ${ad.offers.checkout}`;
+  checkinAndCheckOut.textContent = `Заезд после ${similarAd.offers.checkin}, выезд до ${similarAd.offers.checkout}`;
 
   featuresListElements.forEach((event) => {
     event.remove();
@@ -64,7 +54,7 @@ const createAd = function(ad) {
   featuresDataArray.forEach((feature) => {
     const featuresElement = document.createElement('li');
     featuresElement.classList.add('popup__feature');
-    featuresElement.classList.add(FEATURES_CLASSES[feature]);
+    featuresElement.classList.add(FeaturesClasses[feature]);
     featuresList.appendChild(featuresElement);
   });
 
@@ -76,17 +66,13 @@ const createAd = function(ad) {
     const photoElement = document.createElement('img');
     photoElement.classList.add('popup__photo');
     photoElement.src = photo;
-    photoElement.width = PHOTOS_DATA.width;
-    photoElement.height = PHOTOS_DATA.height;
-    photoElement.alt = PHOTOS_DATA.alt;
+    photoElement.width = PhotosData.width;
+    photoElement.height = PhotosData.height;
+    photoElement.alt = PhotosData.alt;
     photoList.appendChild(photoElement);
   });
 
-  arrayAds.push(similarAdTemplate);
+  return similarAdTemplate;
 };
 
-similarAds.forEach((ad) => {
-  createAd(ad);
-});
-
-export {arrayAds};
+export {createAd};
