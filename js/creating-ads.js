@@ -23,7 +23,7 @@ const PhotosData = {
   ALT : 'Фотография жилья',
 };
 
-const createAd = function(similarAd) {
+const createAd = (similarAd) => {
   let similarAdTemplate = document.querySelector('#card').content;
   similarAdTemplate = similarAdTemplate.cloneNode(true);
   const adPrice = similarAdTemplate.querySelector('.popup__text--price');
