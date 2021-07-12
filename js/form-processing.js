@@ -33,11 +33,22 @@ const addFormValidation = () => {
     MAX : 100,
   };
   const MAX_PRICE = 1000000;
+  const HousingPriceMin = {
+    BUNGALOW : 0,
+    FLAT : 1000,
+    HOTEL : 3000,
+    HOUSE : 5000,
+    PALACE : 10000,
+  };
   const adTitle = document.querySelector('#title');
   const adPrice = document.querySelector('#price');
   const roomCapacitySelect = document.querySelector('#room_number');
+  const roomCapacityOptions = roomCapacitySelect.querySelectorAll('option');
   const guestCapacitySelect = document.querySelector('#capacity');
   const guestCapacityOptions = guestCapacitySelect.querySelectorAll('option');
+  const typeHousingSelect = document.querySelector('#type');
+  const timeInSelect = document.querySelector('#timein');
+  const timeOutSelect = document.querySelector('#timeout');
 
   adTitle.addEventListener('input', () => {
     const valueLength = adTitle.value.length;
@@ -61,11 +72,11 @@ const addFormValidation = () => {
     }
   });
 
-  const addSyncSelects = (evt) => {
+  const addSyncSelects = (evt, optionsList) => {
     const currentOption = evt.target;
     const currentOptionValue = parseFloat(currentOption.value);
 
-    const addDisabledOptions = (optionsList) => {
+    const addDisabledOptions = () => {
       optionsList.forEach((option) => {
         option.selected = false;
         const optionValue = parseFloat(option.value);
@@ -82,16 +93,16 @@ const addFormValidation = () => {
 
     switch (currentOptionValue) {
       case 1:
-        addDisabledOptions(guestCapacityOptions);
+        addDisabledOptions(optionsList);
         break;
       case 2:
-        addDisabledOptions(guestCapacityOptions);
+        addDisabledOptions(optionsList);
         break;
       case 3:
-        addDisabledOptions(guestCapacityOptions);
+        addDisabledOptions(optionsList);
         break;
-      case 100 || 0:
-        guestCapacityOptions.forEach((option) => {
+      case 100:
+        optionsList.forEach((option) => {
           const optionValue = parseFloat(option.value);
           if (optionValue !== 0) {
             option.disabled = true;
@@ -104,7 +115,50 @@ const addFormValidation = () => {
     }
   };
 
-  roomCapacitySelect.addEventListener('change', (evt) => addSyncSelects(evt));
+  roomCapacitySelect.addEventListener('change', (evt) => addSyncSelects(evt, guestCapacityOptions));
+  guestCapacitySelect.addEventListener('change', (evt) => addSyncSelects(evt, roomCapacityOptions));
+
+  typeHousingSelect.addEventListener('change', (evt) => {
+    const optionValue = evt.target.value;
+
+    switch (optionValue) {
+      case 'bungalow' :
+        adPrice.min = HousingPriceMin.BUNGALOW;
+        adPrice.placeholder = HousingPriceMin.BUNGALOW;
+        break;
+      case 'flat' :
+        adPrice.min = HousingPriceMin.FLAT;
+        adPrice.placeholder = HousingPriceMin.FLAT;
+        break;
+      case 'hotel' :
+        adPrice.min = HousingPriceMin.HOTEL;
+        adPrice.placeholder = HousingPriceMin.HOTEL;
+        break;
+      case 'house' :
+        adPrice.min = HousingPriceMin.HOUSE;
+        adPrice.placeholder = HousingPriceMin.HOUSE;
+        break;
+      case 'palace' :
+        adPrice.min = HousingPriceMin.PALACE;
+        adPrice.placeholder = HousingPriceMin.PALACE;
+        break;
+    }
+  });
+
+  const addSelectOpionsTime = (evt, optionsList) => {
+    const optionValue = evt.target.value;
+
+    for (const elem of optionsList.children) {
+      if (elem.value === optionValue) {
+        elem.selected = true;
+      } else {
+        elem.selected = false;
+      }
+    }
+  };
+
+  timeInSelect.addEventListener('change', (evt) => addSelectOpionsTime(evt, timeOutSelect));
+  timeOutSelect.addEventListener('change', (evt) => addSelectOpionsTime(evt, timeInSelect));
 };
 
 export {addFormsLocking, removeFormsLocking, addFormValidation};
