@@ -24,7 +24,7 @@ const PhotosData = {
 };
 
 const createAd = (similarAd) => {
-  let similarAdTemplate = document.querySelector('#card').content;
+  let similarAdTemplate = document.querySelector('#card').content.querySelector('.popup');
   similarAdTemplate = similarAdTemplate.cloneNode(true);
   const adPrice = similarAdTemplate.querySelector('.popup__text--price');
   const amountGuestsAndRooms = similarAdTemplate.querySelector('.popup__text--capacity');
