@@ -26,51 +26,58 @@ const PhotosData = {
 const createAd = (similarAd) => {
   let similarAdTemplate = document.querySelector('#card').content.querySelector('.popup');
   similarAdTemplate = similarAdTemplate.cloneNode(true);
+  const arrayFeatures = similarAd.offer.features || [];
+  const arrayPhotos = similarAd.offer.photos || [];
   const adPrice = similarAdTemplate.querySelector('.popup__text--price');
   const amountGuestsAndRooms = similarAdTemplate.querySelector('.popup__text--capacity');
   const checkinAndCheckOut = similarAdTemplate.querySelector('.popup__text--time');
   const featuresList = similarAdTemplate.querySelector('.popup__features');
   const featuresListElements = similarAdTemplate.querySelectorAll('.popup__feature');
-  const featuresDataArray = similarAd.offers.features;
   const photoList = similarAdTemplate.querySelector('.popup__photos');
   const photoListElements = similarAdTemplate.querySelectorAll('.popup__photo');
-  const photosDataArray = similarAd.offers.photos;
-
   similarAdTemplate.querySelector('.popup__avatar').src = similarAd.author.avatar;
-  similarAdTemplate.querySelector('.popup__title').textContent = similarAd.offers.title;
-  similarAdTemplate.querySelector('.popup__text--address').textContent = similarAd.offers.address;
-  adPrice.textContent = `${similarAd.offers.price  } ₽/ночь`;
-  similarAdTemplate.querySelector('.popup__description').textContent = similarAd.offers.description;
-  similarAdTemplate.querySelector('.popup__type').textContent = HousingTypeDictionary[similarAd.offers.type];
-  amountGuestsAndRooms.textContent = `${similarAd.offers.room} ${getWordEndings(similarAd.offers.room, ['комната', 'комнаты', 'комнат'])} для
-  ${similarAd.offers.guests} ${getWordEndings(similarAd.offers.guests, ['гостя', 'гостей'])}`;
+  similarAdTemplate.querySelector('.popup__title').textContent = similarAd.offer.title;
+  similarAdTemplate.querySelector('.popup__text--address').textContent = similarAd.offer.address;
+  adPrice.textContent = `${similarAd.offer.price  } ₽/ночь`;
+  similarAdTemplate.querySelector('.popup__description').textContent = similarAd.offer.description;
+  similarAdTemplate.querySelector('.popup__type').textContent = HousingTypeDictionary[similarAd.offer.type];
+  amountGuestsAndRooms.textContent = `${similarAd.offer.rooms} ${getWordEndings(similarAd.offer.rooms, ['комната', 'комнаты', 'комнат'])} для
+  ${similarAd.offer.guests} ${getWordEndings(similarAd.offer.guests, ['гостя', 'гостей'])}`;
 
-  checkinAndCheckOut.textContent = `Заезд после ${similarAd.offers.checkin}, выезд до ${similarAd.offers.checkout}`;
+  checkinAndCheckOut.textContent = `Заезд после ${similarAd.offer.checkin}, выезд до ${similarAd.offer.checkout}`;
 
   featuresListElements.forEach((event) => {
     event.remove();
   });
 
-  featuresDataArray.forEach((feature) => {
-    const featuresElement = document.createElement('li');
-    featuresElement.classList.add('popup__feature');
-    featuresElement.classList.add(FeaturesClasses[feature]);
-    featuresList.appendChild(featuresElement);
-  });
+  if (arrayFeatures === []) {
+    featuresList.classList.add('hidden');
+  } else {
+    arrayFeatures.forEach((feature) => {
+      const featuresElement = document.createElement('li');
+      featuresElement.classList.add('popup__feature');
+      featuresElement.classList.add(FeaturesClasses[feature]);
+      featuresList.appendChild(featuresElement);
+    });
+  }
 
   photoListElements.forEach((event) => {
     event.remove();
   });
 
-  photosDataArray.forEach((photo) => {
-    const photoElement = document.createElement('img');
-    photoElement.classList.add('popup__photo');
-    photoElement.src = photo;
-    photoElement.width = PhotosData.width;
-    photoElement.height = PhotosData.height;
-    photoElement.alt = PhotosData.alt;
-    photoList.appendChild(photoElement);
-  });
+  if(arrayPhotos === []) {
+    photoList.classList.add('hidden');
+  } else {
+    arrayPhotos.forEach((photo) => {
+      const photoElement = document.createElement('img');
+      photoElement.classList.add('popup__photo');
+      photoElement.src = photo;
+      photoElement.width = PhotosData.width;
+      photoElement.height = PhotosData.height;
+      photoElement.alt = PhotosData.alt;
+      photoList.appendChild(photoElement);
+    });
+  }
 
   return similarAdTemplate;
 };

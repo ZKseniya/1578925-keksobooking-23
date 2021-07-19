@@ -1,5 +1,9 @@
+import { resetMap, addDefaultCoordinates } from './map-processing.js';
+
 const infoAboutAdForm = document.querySelector('.ad-form');
 const filtersForm = document.querySelector('.map__filters');
+const guestCapacitySelect = document.querySelector('#capacity');
+const guestCapacityOptions = guestCapacitySelect.querySelectorAll('option');
 
 const addFormsLocking = () => {
   const addDisabled = (element) => {
@@ -23,7 +27,21 @@ const removeFormsLocking = () => {
       item.disabled = false;
     });
   };
+  const addDefaultValue  = () => {
+    addDefaultCoordinates();
+    guestCapacityOptions.forEach((option) => {
+      if (parseFloat(option.value) > 1 || parseFloat(option.value) === 0) {
+        option.disabled = true;
+        option.selected = false;
+      } else {
+        option.disabled = false;
+        option.selected = true;
+      }
+    });
+  };
+
   removeDisabled(infoAboutAdForm);
+  addDefaultValue();
   removeDisabled(filtersForm);
 };
 
@@ -40,12 +58,12 @@ const addFormValidation = () => {
     HOUSE : 5000,
     PALACE : 10000,
   };
+
+  const typeHousingOptionsValue = ['bungalow', 'flat', 'hotel', 'house', 'palace'];
+
   const adTitle = document.querySelector('#title');
   const adPrice = document.querySelector('#price');
   const roomCapacitySelect = document.querySelector('#room_number');
-  const roomCapacityOptions = roomCapacitySelect.querySelectorAll('option');
-  const guestCapacitySelect = document.querySelector('#capacity');
-  const guestCapacityOptions = guestCapacitySelect.querySelectorAll('option');
   const typeHousingSelect = document.querySelector('#type');
   const timeInSelect = document.querySelector('#timein');
   const timeOutSelect = document.querySelector('#timeout');
@@ -75,70 +93,58 @@ const addFormValidation = () => {
   const addSyncSelects = (evt, optionsList) => {
     const currentOption = evt.target;
     const currentOptionValue = parseFloat(currentOption.value);
+    const guestsOptionsValue = [1, 2, 3, 100];
 
     const addDisabledOptions = () => {
       optionsList.forEach((option) => {
         option.selected = false;
         const optionValue = parseFloat(option.value);
-        if (optionValue > currentOptionValue || optionValue === 0) {
-          option.disabled = true;
-        } else {
-          option.disabled = false;
-          if (optionValue === 1) {
-            option.selected = true;
-          }
-        }
+        option.disabled = optionValue > currentOptionValue || optionValue === 0;
+        option.selected = optionValue === 1;
       });
     };
 
     switch (currentOptionValue) {
-      case 1:
+      case guestsOptionsValue[0]:
         addDisabledOptions(optionsList);
         break;
-      case 2:
+      case guestsOptionsValue[1]:
         addDisabledOptions(optionsList);
         break;
-      case 3:
+      case guestsOptionsValue[2]:
         addDisabledOptions(optionsList);
         break;
-      case 100:
+      case guestsOptionsValue[3]:
         optionsList.forEach((option) => {
           const optionValue = parseFloat(option.value);
-          if (optionValue !== 0) {
-            option.disabled = true;
-            option.selected = false;
-          } else {
-            option.disabled = false;
-            option.selected = true;
-          }
-        });
-    }
+          option.disabled = optionValue !== 0;
+          option.selected = !(optionValue !== 0);
+      });
+    };
   };
-
   roomCapacitySelect.addEventListener('change', (evt) => addSyncSelects(evt, guestCapacityOptions));
-  guestCapacitySelect.addEventListener('change', (evt) => addSyncSelects(evt, roomCapacityOptions));
 
   typeHousingSelect.addEventListener('change', (evt) => {
     const optionValue = evt.target.value;
 
     switch (optionValue) {
-      case 'bungalow' :
+      case typeHousingOptionsValue[0] :
         adPrice.min = HousingPriceMin.BUNGALOW;
         adPrice.placeholder = HousingPriceMin.BUNGALOW;
         break;
-      case 'flat' :
+      case typeHousingOptionsValue[1] :
         adPrice.min = HousingPriceMin.FLAT;
         adPrice.placeholder = HousingPriceMin.FLAT;
         break;
-      case 'hotel' :
+      case typeHousingOptionsValue[2] :
         adPrice.min = HousingPriceMin.HOTEL;
         adPrice.placeholder = HousingPriceMin.HOTEL;
         break;
-      case 'house' :
+      case typeHousingOptionsValue[3] :
         adPrice.min = HousingPriceMin.HOUSE;
         adPrice.placeholder = HousingPriceMin.HOUSE;
         break;
-      case 'palace' :
+      case typeHousingOptionsValue[4] :
         adPrice.min = HousingPriceMin.PALACE;
         adPrice.placeholder = HousingPriceMin.PALACE;
         break;
@@ -149,11 +155,7 @@ const addFormValidation = () => {
     const optionValue = evt.target.value;
 
     for (const elem of optionsList.children) {
-      if (elem.value === optionValue) {
-        elem.selected = true;
-      } else {
-        elem.selected = false;
-      }
+      elem.selected = elem.value === optionValue;
     }
   };
 
@@ -161,4 +163,14 @@ const addFormValidation = () => {
   timeOutSelect.addEventListener('change', (evt) => addSelectOpionsTime(evt, timeInSelect));
 };
 
-export {addFormsLocking, removeFormsLocking, addFormValidation};
+const clearUserForm = () => {
+  infoAboutAdForm.reset();
+  resetMap();
+  addDefaultCoordinates();
+};
+
+const buttonReset = document.querySelector('.ad-form__reset');
+
+buttonReset.addEventListener('click', () => clearUserForm());
+
+export {addFormsLocking, removeFormsLocking, addFormValidation, clearUserForm};

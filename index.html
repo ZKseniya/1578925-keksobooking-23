@@ -8,7 +8,6 @@
 
   <link rel="stylesheet" href="./leaflet/leaflet.css"/>
 
-   <script src="./leaflet/leaflet.js"></script>
   <title>Кексобукинг</title>
 </head>
 <body>
@@ -95,7 +94,7 @@
         </fieldset>
         <fieldset class="ad-form__element ad-form__element--wide">
           <label class="ad-form__label" for="address">Адрес (координаты)</label>
-          <input id="address" name="address" type="text" value="lat: 35.6895, lng: 139.692" readonly>
+          <input id="address" name="address" type="text" value="" readonly>
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="type">Тип жилья</label>
@@ -234,6 +233,8 @@
     </div>
   </template>
 
+
   <script type="module" src="./js/main.js"></script>
+  <script src="./leaflet/leaflet.js"></script>
 </body>
 </html>
