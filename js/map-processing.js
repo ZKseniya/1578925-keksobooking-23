@@ -76,7 +76,7 @@ const mainMarker = L.marker(
 
 mainMarker.addTo(map);
 
-mainMarker.on('moveend', (evt) => {
+mainMarker.on('mouseover', (evt) => {
   const currentСoordinates = evt.target.getLatLng();
   coordinates.value = `${currentСoordinates.lat.toFixed(5)}, ${currentСoordinates.lng.toFixed(4)}`;
 });

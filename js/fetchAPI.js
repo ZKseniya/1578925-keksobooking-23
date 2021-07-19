@@ -1,10 +1,26 @@
 import {addMapAndMarkers} from './map-processing.js';
+import {onMessageErrorServer} from './messages.js';
+import {clearUserForm} from './form-processing.js';
+
+const FetchUrl = {
+  GETDATA : 'https://23.javascript.pages.academy/keksobooking/data',
+  SENDDATA : 'https://23.javascript.pages.academy/keksobooking',
+};
 
 const getData = () => {
-  fetch('https://23.javascript.pages.academy/keksobooking/data')
-    .then((response) => response.json())
+  fetch(FetchUrl.GETDATA)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        onMessageErrorServer();
+      }
+    })
     .then((adsList) => {
       addMapAndMarkers(adsList);
+    })
+    .catch(() => {
+      onMessageErrorServer();
     });
 };
 
@@ -16,7 +32,7 @@ const sendData = (onSuccess, onSuccessMessage, onErrorMassage) => {
 
     const formData = new FormData(evt.target);
 
-    fetch('https://23.javascript.pages.academy/keksobooking',
+    fetch(FetchUrl.SENDDATA,
       {
         method: 'POST',
         body: formData,
@@ -25,6 +41,9 @@ const sendData = (onSuccess, onSuccessMessage, onErrorMassage) => {
       if (response.ok) {
         onSuccess();
         onSuccessMessage();
+      } else if (response.status > 400){
+        onErrorMassage();
+        clearUserForm();
       } else {
         onErrorMassage();
       }

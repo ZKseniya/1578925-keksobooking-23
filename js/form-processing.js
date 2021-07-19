@@ -30,13 +30,8 @@ const removeFormsLocking = () => {
   const addDefaultValue  = () => {
     addDefaultCoordinates();
     guestCapacityOptions.forEach((option) => {
-      if (parseFloat(option.value) > 1 || parseFloat(option.value) === 0) {
-        option.disabled = true;
-        option.selected = false;
-      } else {
-        option.disabled = false;
-        option.selected = true;
-      }
+      option.disabled = parseFloat(option.value) > 1 || parseFloat(option.value) === 0;
+      option.selected = !(parseFloat(option.value) > 1 || parseFloat(option.value) === 0);
     });
   };
 
@@ -59,7 +54,7 @@ const addFormValidation = () => {
     PALACE : 10000,
   };
 
-  const typeHousingOptionsValue = ['bungalow', 'flat', 'hotel', 'house', 'palace'];
+  const TypeHousingOptionsValue = ['bungalow', 'flat', 'hotel', 'house', 'palace'];
 
   const adTitle = document.querySelector('#title');
   const adPrice = document.querySelector('#price');
@@ -93,7 +88,7 @@ const addFormValidation = () => {
   const addSyncSelects = (evt, optionsList) => {
     const currentOption = evt.target;
     const currentOptionValue = parseFloat(currentOption.value);
-    const guestsOptionsValue = [1, 2, 3, 100];
+    const GuestsOptionsValue = [1, 2, 3, 100];
 
     const addDisabledOptions = () => {
       optionsList.forEach((option) => {
@@ -105,22 +100,22 @@ const addFormValidation = () => {
     };
 
     switch (currentOptionValue) {
-      case guestsOptionsValue[0]:
+      case GuestsOptionsValue[0]:
         addDisabledOptions(optionsList);
         break;
-      case guestsOptionsValue[1]:
+      case GuestsOptionsValue[1]:
         addDisabledOptions(optionsList);
         break;
-      case guestsOptionsValue[2]:
+      case GuestsOptionsValue[2]:
         addDisabledOptions(optionsList);
         break;
-      case guestsOptionsValue[3]:
+      case GuestsOptionsValue[3]:
         optionsList.forEach((option) => {
           const optionValue = parseFloat(option.value);
           option.disabled = optionValue !== 0;
           option.selected = !(optionValue !== 0);
-      });
-    };
+        });
+    }
   };
   roomCapacitySelect.addEventListener('change', (evt) => addSyncSelects(evt, guestCapacityOptions));
 
@@ -128,23 +123,23 @@ const addFormValidation = () => {
     const optionValue = evt.target.value;
 
     switch (optionValue) {
-      case typeHousingOptionsValue[0] :
+      case TypeHousingOptionsValue[0] :
         adPrice.min = HousingPriceMin.BUNGALOW;
         adPrice.placeholder = HousingPriceMin.BUNGALOW;
         break;
-      case typeHousingOptionsValue[1] :
+      case TypeHousingOptionsValue[1] :
         adPrice.min = HousingPriceMin.FLAT;
         adPrice.placeholder = HousingPriceMin.FLAT;
         break;
-      case typeHousingOptionsValue[2] :
+      case TypeHousingOptionsValue[2] :
         adPrice.min = HousingPriceMin.HOTEL;
         adPrice.placeholder = HousingPriceMin.HOTEL;
         break;
-      case typeHousingOptionsValue[3] :
+      case TypeHousingOptionsValue[3] :
         adPrice.min = HousingPriceMin.HOUSE;
         adPrice.placeholder = HousingPriceMin.HOUSE;
         break;
-      case typeHousingOptionsValue[4] :
+      case TypeHousingOptionsValue[4] :
         adPrice.min = HousingPriceMin.PALACE;
         adPrice.placeholder = HousingPriceMin.PALACE;
         break;
@@ -171,6 +166,9 @@ const clearUserForm = () => {
 
 const buttonReset = document.querySelector('.ad-form__reset');
 
-buttonReset.addEventListener('click', () => clearUserForm());
+buttonReset.addEventListener('click', (evt) => {
+  evt.preventDefault;
+  clearUserForm();
+});
 
 export {addFormsLocking, removeFormsLocking, addFormValidation, clearUserForm};
