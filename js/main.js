@@ -4,5 +4,6 @@ import {onSuccessMessage, onErrorMassage} from './messages.js';
 
 addFormsLocking();
 getData();
-addFormValidation();
 sendData(clearUserForm, onSuccessMessage, onErrorMassage);
+addFormValidation();
+

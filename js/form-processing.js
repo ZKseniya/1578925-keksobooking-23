@@ -54,7 +54,13 @@ const addFormValidation = () => {
     PALACE : 10000,
   };
 
-  const TypeHousingOptionsValue = ['bungalow', 'flat', 'hotel', 'house', 'palace'];
+  const TypeHousingOptionsValue = {
+    BUNGALOW : 'bungalow',
+    FLAT : 'flat',
+    HOTEL : 'hotel',
+    HOUSE : 'house',
+    PALACE : 'palace',
+  };
 
   const adTitle = document.querySelector('#title');
   const adPrice = document.querySelector('#price');
@@ -88,7 +94,12 @@ const addFormValidation = () => {
   const addSyncSelects = (evt, optionsList) => {
     const currentOption = evt.target;
     const currentOptionValue = parseFloat(currentOption.value);
-    const GuestsOptionsValue = [1, 2, 3, 100];
+    const GuestsOptionsValue = {
+      ONE_GUEST : 1,
+      TWO_GUESTS : 2,
+      THREE_GUESTS : 3,
+      NOT_FOR_GUESTS : 100,
+    };
 
     const addDisabledOptions = () => {
       optionsList.forEach((option) => {
@@ -100,16 +111,16 @@ const addFormValidation = () => {
     };
 
     switch (currentOptionValue) {
-      case GuestsOptionsValue[0]:
+      case GuestsOptionsValue.ONE_GUEST:
         addDisabledOptions(optionsList);
         break;
-      case GuestsOptionsValue[1]:
+      case GuestsOptionsValue.TWO_GUESTS:
         addDisabledOptions(optionsList);
         break;
-      case GuestsOptionsValue[2]:
+      case GuestsOptionsValue.THREE_GUESTS:
         addDisabledOptions(optionsList);
         break;
-      case GuestsOptionsValue[3]:
+      case GuestsOptionsValue.NOT_FOR_GUESTS:
         optionsList.forEach((option) => {
           const optionValue = parseFloat(option.value);
           option.disabled = optionValue !== 0;
@@ -123,23 +134,23 @@ const addFormValidation = () => {
     const optionValue = evt.target.value;
 
     switch (optionValue) {
-      case TypeHousingOptionsValue[0] :
+      case TypeHousingOptionsValue.BUNGALOW :
         adPrice.min = HousingPriceMin.BUNGALOW;
         adPrice.placeholder = HousingPriceMin.BUNGALOW;
         break;
-      case TypeHousingOptionsValue[1] :
+      case TypeHousingOptionsValue.FLAT :
         adPrice.min = HousingPriceMin.FLAT;
         adPrice.placeholder = HousingPriceMin.FLAT;
         break;
-      case TypeHousingOptionsValue[2] :
+      case TypeHousingOptionsValue.HOTEL :
         adPrice.min = HousingPriceMin.HOTEL;
         adPrice.placeholder = HousingPriceMin.HOTEL;
         break;
-      case TypeHousingOptionsValue[3] :
+      case TypeHousingOptionsValue.HOUSE :
         adPrice.min = HousingPriceMin.HOUSE;
         adPrice.placeholder = HousingPriceMin.HOUSE;
         break;
-      case TypeHousingOptionsValue[4] :
+      case TypeHousingOptionsValue.PALACE :
         adPrice.min = HousingPriceMin.PALACE;
         adPrice.placeholder = HousingPriceMin.PALACE;
         break;
@@ -167,7 +178,7 @@ const clearUserForm = () => {
 const buttonReset = document.querySelector('.ad-form__reset');
 
 buttonReset.addEventListener('click', (evt) => {
-  evt.preventDefault;
+  evt.preventDefault();
   clearUserForm();
 });
 

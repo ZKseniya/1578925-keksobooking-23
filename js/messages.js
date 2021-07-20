@@ -6,7 +6,7 @@ const closeMessage = (message) => {
     }
   });
 
-  document.querySelector('#error').addEventListener('click', () => {
+  document.body.addEventListener('click', () => {
     message.remove();
   });
 };
