@@ -6,9 +6,12 @@ const closeMessage = (message) => {
     }
   });
 
-  document.body.addEventListener('click', () => {
+  const get = () => {
     message.remove();
-  });
+    document.body.removeEventListener('click', get);
+  };
+
+  document.body.addEventListener('click', get);
 };
 
 const onSuccessMessage = () => {

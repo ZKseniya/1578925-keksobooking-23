@@ -6,4 +6,3 @@ addFormsLocking();
 getData();
 sendData(clearUserForm, onSuccessMessage, onErrorMassage);
 addFormValidation();
-
