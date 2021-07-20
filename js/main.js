@@ -1,10 +1,8 @@
-import {createSimilarAds} from './data-generator.js';
-import {addFormsLocking, addFormValidation} from './form-processing.js';
-import {addMapAndMarkers} from './map-processing.js';
-
-const SIMILAR_AD_COUNT = 10;
-const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map((element, index) => createSimilarAds(element, index));
+import {addFormsLocking, addFormValidation, clearUserForm} from './form-processing.js';
+import {getData, sendData} from './fetchAPI.js';
+import {onSuccessMessage, onErrorMassage} from './messages.js';
 
 addFormsLocking();
-addMapAndMarkers(similarAds);
+getData();
 addFormValidation();
+sendData(clearUserForm, onSuccessMessage, onErrorMassage);
