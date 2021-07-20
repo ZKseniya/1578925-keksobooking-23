@@ -128,7 +128,7 @@ const addMarkers = (similarAds) => {
 
   filtersForm.addEventListener('change', () => {
     markersGroup.clearLayers();
-    debounce(() => addFilterMarkers(similarAds), RERENDER_DELAY);
+    addFilterMarkers(similarAds);
   });
 };
 
