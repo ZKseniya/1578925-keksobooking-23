@@ -1,5 +1,7 @@
 import {removeFormsLocking} from './form-processing.js';
 import {createAd} from './creating-ads.js';
+import {addFilterMarkers} from './filters.js';
+import {debounce} from './utils/debounce.js';
 
 const MapDefaultOptions = {
   LAT : 35.6895,
@@ -32,6 +34,8 @@ const SimilarMarkerOptions = {
   },
   ICONIMAGE : './img/pin.svg',
 };
+
+const SIMILAR_ADS_COUNT = 10;
 
 const coordinates = document.querySelector('#address');
 const map = L.map('map-canvas');
@@ -74,24 +78,24 @@ const mainMarker = L.marker(
   },
 );
 
+const markersGroup = L.layerGroup();
+
 mainMarker.addTo(map);
 
-mainMarker.on('mouseover', (evt) => {
+mainMarker.on('move', (evt) => {
   const currentСoordinates = evt.target.getLatLng();
   coordinates.value = `${currentСoordinates.lat.toFixed(5)}, ${currentСoordinates.lng.toFixed(4)}`;
 });
 
-const addMapAndMarkers = (similarAds) => {
-
-  initMap();
-
+const createMarkers = (shortAdsList) => {
   const similarPinIcon = L.icon ({
     iconUrl: SimilarMarkerOptions.ICONIMAGE,
     iconSize: [SimilarMarkerOptions.ICONSIZE.width, SimilarMarkerOptions.ICONSIZE.height],
     iconAnchor: [SimilarMarkerOptions.ANCHORSIZE.width, SimilarMarkerOptions.ANCHORSIZE.height],
   });
 
-  similarAds.forEach((similarAd) => {
+  shortAdsList.forEach((similarAd) => {
+
     const similarMarker = L.marker(
       {
         lat: similarAd.location.lat,
@@ -102,7 +106,7 @@ const addMapAndMarkers = (similarAds) => {
       });
 
     similarMarker
-      .addTo(map)
+      .addTo(markersGroup)
       .bindPopup(
         createAd(similarAd),
         {
@@ -110,6 +114,28 @@ const addMapAndMarkers = (similarAds) => {
         },
       );
   });
+
+  markersGroup.addTo(map);
+};
+
+const addMarkers = (similarAds) => {
+  const filtersForm = document.querySelector('.map__filters');
+
+  const shortAdsList = similarAds.slice(0, SIMILAR_ADS_COUNT);
+
+  createMarkers(shortAdsList);
+
+  filtersForm.addEventListener('change', debounce(() => {
+    markersGroup.clearLayers();
+    addFilterMarkers(similarAds);
+  }));
+};
+
+const addMapAndMarkers = (similarAds) => {
+
+  initMap();
+
+  addMarkers(similarAds);
 };
 
 const resetMap = () => {
@@ -126,7 +152,7 @@ const resetMap = () => {
   );
 };
 
-export {addMapAndMarkers, resetMap};
+export {createMarkers, addMapAndMarkers, resetMap};
 export {addDefaultCoordinates};
 
 

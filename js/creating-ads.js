@@ -1,6 +1,6 @@
-import {getWordEndings} from './util.js';
+import {getWordEndings} from './utils/util.js';
 
-const HousingTypeDictionary = {
+const HousingTypeToRus = {
   bungalow : 'Бунгало',
   flat : 'Квартира',
   house : 'Дом',
@@ -40,7 +40,7 @@ const createAd = (similarAd) => {
   similarAdTemplate.querySelector('.popup__text--address').textContent = similarAd.offer.address;
   adPrice.textContent = `${similarAd.offer.price  } ₽/ночь`;
   similarAdTemplate.querySelector('.popup__description').textContent = similarAd.offer.description;
-  similarAdTemplate.querySelector('.popup__type').textContent = HousingTypeDictionary[similarAd.offer.type];
+  similarAdTemplate.querySelector('.popup__type').textContent = HousingTypeToRus[similarAd.offer.type];
   amountGuestsAndRooms.textContent = `${similarAd.offer.rooms} ${getWordEndings(similarAd.offer.rooms, ['комната', 'комнаты', 'комнат'])} для
   ${similarAd.offer.guests} ${getWordEndings(similarAd.offer.guests, ['гостя', 'гостей'])}`;
 

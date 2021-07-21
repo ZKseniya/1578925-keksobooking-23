@@ -46,15 +46,28 @@ const addFormValidation = () => {
     MAX : 100,
   };
   const MAX_PRICE = 1000000;
-  const HousingPriceMin = {
-    BUNGALOW : 0,
-    FLAT : 1000,
-    HOTEL : 3000,
-    HOUSE : 5000,
-    PALACE : 10000,
+  const HousingOptions = {
+    BUNGALOW : {
+      minPrice: 0,
+      value: 'bungalow',
+    },
+    FLAT : {
+      minPrice: 1000,
+      value: 'flat',
+    },
+    HOTEL : {
+      minPrice: 3000,
+      value: 'hotel',
+    },
+    HOUSE : {
+      minPrice: 5000,
+      value: 'house',
+    },
+    PALACE : {
+      minPrice: 10000,
+      value: 'palace',
+    },
   };
-
-  const TypeHousingOptionsValue = ['bungalow', 'flat', 'hotel', 'house', 'palace'];
 
   const adTitle = document.querySelector('#title');
   const adPrice = document.querySelector('#price');
@@ -88,7 +101,12 @@ const addFormValidation = () => {
   const addSyncSelects = (evt, optionsList) => {
     const currentOption = evt.target;
     const currentOptionValue = parseFloat(currentOption.value);
-    const GuestsOptionsValue = [1, 2, 3, 100];
+    const GuestsOptionsValue = {
+      ONE_GUEST : 1,
+      TWO_GUESTS : 2,
+      THREE_GUESTS : 3,
+      NOT_FOR_GUESTS : 100,
+    };
 
     const addDisabledOptions = () => {
       optionsList.forEach((option) => {
@@ -100,16 +118,12 @@ const addFormValidation = () => {
     };
 
     switch (currentOptionValue) {
-      case GuestsOptionsValue[0]:
+      case GuestsOptionsValue.ONE_GUEST:
+      case GuestsOptionsValue.TWO_GUESTS:
+      case GuestsOptionsValue.THREE_GUESTS:
         addDisabledOptions(optionsList);
         break;
-      case GuestsOptionsValue[1]:
-        addDisabledOptions(optionsList);
-        break;
-      case GuestsOptionsValue[2]:
-        addDisabledOptions(optionsList);
-        break;
-      case GuestsOptionsValue[3]:
+      case GuestsOptionsValue.NOT_FOR_GUESTS:
         optionsList.forEach((option) => {
           const optionValue = parseFloat(option.value);
           option.disabled = optionValue !== 0;
@@ -122,28 +136,8 @@ const addFormValidation = () => {
   typeHousingSelect.addEventListener('change', (evt) => {
     const optionValue = evt.target.value;
 
-    switch (optionValue) {
-      case TypeHousingOptionsValue[0] :
-        adPrice.min = HousingPriceMin.BUNGALOW;
-        adPrice.placeholder = HousingPriceMin.BUNGALOW;
-        break;
-      case TypeHousingOptionsValue[1] :
-        adPrice.min = HousingPriceMin.FLAT;
-        adPrice.placeholder = HousingPriceMin.FLAT;
-        break;
-      case TypeHousingOptionsValue[2] :
-        adPrice.min = HousingPriceMin.HOTEL;
-        adPrice.placeholder = HousingPriceMin.HOTEL;
-        break;
-      case TypeHousingOptionsValue[3] :
-        adPrice.min = HousingPriceMin.HOUSE;
-        adPrice.placeholder = HousingPriceMin.HOUSE;
-        break;
-      case TypeHousingOptionsValue[4] :
-        adPrice.min = HousingPriceMin.PALACE;
-        adPrice.placeholder = HousingPriceMin.PALACE;
-        break;
-    }
+    adPrice.min = HousingOptions[optionValue.toUpperCase()].minPrice;
+    adPrice.placeholder = HousingOptions[optionValue.toUpperCase()].minPrice;
   });
 
   const addSelectOpionsTime = (evt, optionsList) => {
@@ -167,7 +161,7 @@ const clearUserForm = () => {
 const buttonReset = document.querySelector('.ad-form__reset');
 
 buttonReset.addEventListener('click', (evt) => {
-  evt.preventDefault;
+  evt.preventDefault();
   clearUserForm();
 });
 
