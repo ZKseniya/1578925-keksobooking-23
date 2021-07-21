@@ -136,28 +136,8 @@ const addFormValidation = () => {
   typeHousingSelect.addEventListener('change', (evt) => {
     const optionValue = evt.target.value;
 
-    switch (optionValue) {
-      case HousingOptions.BUNGALOW.value :
-        adPrice.min = HousingOptions.BUNGALOW.minPrice;
-        adPrice.placeholder = HousingOptions.BUNGALOW.minPrice;
-        break;
-      case HousingOptions.FLAT.value :
-        adPrice.min = HousingOptions.FLAT.minPrice;
-        adPrice.placeholder = HousingOptions.FLAT.minPrice;
-        break;
-      case HousingOptions.HOTEL.value :
-        adPrice.min = HousingOptions.HOTEL.minPrice;
-        adPrice.placeholder = HousingOptions.HOTEL.minPrice;
-        break;
-      case HousingOptions.HOUSE.value :
-        adPrice.min = HousingOptions.HOUSE.minPrice;
-        adPrice.placeholder = HousingOptions.HOUSE.minPrice;
-        break;
-      case HousingOptions.PALACE.value :
-        adPrice.min = HousingOptions.PALACE.minPrice;
-        adPrice.placeholder = HousingOptions.PALACE.minPrice;
-        break;
-    }
+    adPrice.min = HousingOptions[optionValue.toUpperCase()].minPrice;
+    adPrice.placeholder = HousingOptions[optionValue.toUpperCase()].minPrice;
   });
 
   const addSelectOpionsTime = (evt, optionsList) => {
