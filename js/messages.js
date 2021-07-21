@@ -6,12 +6,12 @@ const closeMessage = (message) => {
     }
   });
 
-  const get = () => {
+  const closeMassage = () => {
     message.remove();
-    document.body.removeEventListener('click', get);
+    document.body.removeEventListener('click', closeMassage);
   };
 
-  document.body.addEventListener('click', get);
+  document.body.addEventListener('click', closeMassage);
 };
 
 const onSuccessMessage = () => {
@@ -54,12 +54,12 @@ const onMessageErrorServer = () => {
 
   document.body.appendChild(alertContainer);
 
-  const offMassageErrorServer = () => {
+  const offMessageErrorServer = () => {
     document.body.removeChild(alertContainer);
   };
 
   setTimeout(() => {
-    offMassageErrorServer();
+    offMessageErrorServer();
   }, 5000);
 };
 

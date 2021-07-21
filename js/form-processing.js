@@ -46,20 +46,27 @@ const addFormValidation = () => {
     MAX : 100,
   };
   const MAX_PRICE = 1000000;
-  const HousingPriceMin = {
-    BUNGALOW : 0,
-    FLAT : 1000,
-    HOTEL : 3000,
-    HOUSE : 5000,
-    PALACE : 10000,
-  };
-
-  const TypeHousingOptionsValue = {
-    BUNGALOW : 'bungalow',
-    FLAT : 'flat',
-    HOTEL : 'hotel',
-    HOUSE : 'house',
-    PALACE : 'palace',
+  const HousingOptions = {
+    BUNGALOW : {
+      minPrice: 0,
+      value: 'bungalow',
+    },
+    FLAT : {
+      minPrice: 1000,
+      value: 'flat',
+    },
+    HOTEL : {
+      minPrice: 3000,
+      value: 'hotel',
+    },
+    HOUSE : {
+      minPrice: 5000,
+      value: 'house',
+    },
+    PALACE : {
+      minPrice: 10000,
+      value: 'palace',
+    },
   };
 
   const adTitle = document.querySelector('#title');
@@ -112,11 +119,7 @@ const addFormValidation = () => {
 
     switch (currentOptionValue) {
       case GuestsOptionsValue.ONE_GUEST:
-        addDisabledOptions(optionsList);
-        break;
       case GuestsOptionsValue.TWO_GUESTS:
-        addDisabledOptions(optionsList);
-        break;
       case GuestsOptionsValue.THREE_GUESTS:
         addDisabledOptions(optionsList);
         break;
@@ -134,25 +137,25 @@ const addFormValidation = () => {
     const optionValue = evt.target.value;
 
     switch (optionValue) {
-      case TypeHousingOptionsValue.BUNGALOW :
-        adPrice.min = HousingPriceMin.BUNGALOW;
-        adPrice.placeholder = HousingPriceMin.BUNGALOW;
+      case HousingOptions.BUNGALOW.value :
+        adPrice.min = HousingOptions.BUNGALOW.minPrice;
+        adPrice.placeholder = HousingOptions.BUNGALOW.minPrice;
         break;
-      case TypeHousingOptionsValue.FLAT :
-        adPrice.min = HousingPriceMin.FLAT;
-        adPrice.placeholder = HousingPriceMin.FLAT;
+      case HousingOptions.FLAT.value :
+        adPrice.min = HousingOptions.FLAT.minPrice;
+        adPrice.placeholder = HousingOptions.FLAT.minPrice;
         break;
-      case TypeHousingOptionsValue.HOTEL :
-        adPrice.min = HousingPriceMin.HOTEL;
-        adPrice.placeholder = HousingPriceMin.HOTEL;
+      case HousingOptions.HOTEL.value :
+        adPrice.min = HousingOptions.HOTEL.minPrice;
+        adPrice.placeholder = HousingOptions.HOTEL.minPrice;
         break;
-      case TypeHousingOptionsValue.HOUSE :
-        adPrice.min = HousingPriceMin.HOUSE;
-        adPrice.placeholder = HousingPriceMin.HOUSE;
+      case HousingOptions.HOUSE.value :
+        adPrice.min = HousingOptions.HOUSE.minPrice;
+        adPrice.placeholder = HousingOptions.HOUSE.minPrice;
         break;
-      case TypeHousingOptionsValue.PALACE :
-        adPrice.min = HousingPriceMin.PALACE;
-        adPrice.placeholder = HousingPriceMin.PALACE;
+      case HousingOptions.PALACE.value :
+        adPrice.min = HousingOptions.PALACE.minPrice;
+        adPrice.placeholder = HousingOptions.PALACE.minPrice;
         break;
     }
   });

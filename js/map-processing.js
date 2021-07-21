@@ -36,7 +36,6 @@ const SimilarMarkerOptions = {
 };
 
 const SIMILAR_ADS_COUNT = 10;
-const RERENDER_DELAY = 500;
 
 const coordinates = document.querySelector('#address');
 const map = L.map('map-canvas');
@@ -129,7 +128,7 @@ const addMarkers = (similarAds) => {
   filtersForm.addEventListener('change', debounce(() => {
     markersGroup.clearLayers();
     addFilterMarkers(similarAds);
-  }), RERENDER_DELAY);
+  }));
 };
 
 const addMapAndMarkers = (similarAds) => {
