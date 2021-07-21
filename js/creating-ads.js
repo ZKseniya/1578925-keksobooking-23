@@ -1,4 +1,4 @@
-import {getWordEndings} from './util.js';
+import {getWordEndings} from './utils/util.js';
 
 const HousingTypeDictionary = {
   bungalow : 'Бунгало',

@@ -39,6 +39,19 @@ const addFilterMarkers = (adsList) => {
 
 
   createMarkers(filterTypeHousing.slice(0, SIMILAR_ADS_COUNT));
+
+  const buttonReset = document.querySelector('.ad-form__reset');
+
+  const clearFilterForm = () => {
+    filtersForm.reset();
+    createMarkers(adsList.slice(0, SIMILAR_ADS_COUNT));
+  };
+
+  buttonReset.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    clearFilterForm();
+  });
+
 };
 
 export {addFilterMarkers};
