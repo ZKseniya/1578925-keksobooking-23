@@ -126,10 +126,10 @@ const addMarkers = (similarAds) => {
 
   createMarkers(shortAdsList);
 
-  filtersForm.addEventListener('change', () => {
+  filtersForm.addEventListener('change', debounce(() => {
     markersGroup.clearLayers();
     addFilterMarkers(similarAds);
-  });
+  }), RERENDER_DELAY);
 };
 
 const addMapAndMarkers = (similarAds) => {

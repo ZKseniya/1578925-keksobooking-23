@@ -171,6 +171,7 @@ const addFormValidation = () => {
 
 const clearUserForm = () => {
   infoAboutAdForm.reset();
+  filtersForm.reset();
   resetMap();
   addDefaultCoordinates();
 };
