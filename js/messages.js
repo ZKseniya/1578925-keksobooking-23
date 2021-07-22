@@ -6,12 +6,12 @@ const closeMessage = (message) => {
     }
   });
 
-  const closeMassage = () => {
+  const popupMessageCloseHandler = () => {
     message.remove();
-    document.body.removeEventListener('click', closeMassage);
+    document.body.removeEventListener('click', popupMessageCloseHandler);
   };
 
-  document.body.addEventListener('click', closeMassage);
+  document.body.addEventListener('click', popupMessageCloseHandler);
 };
 
 const onSuccessMessage = () => {
@@ -28,11 +28,11 @@ const onErrorMassage = () => {
   const errorButton = messageTemplateError.querySelector('.error__button');
   document.body.appendChild(messageTemplateError);
 
-  const closeErrorMessage = () => {
+  const ErrorMessageCloseHandler = () => {
     messageTemplateError.remove();
   };
 
-  errorButton.addEventListener('click', () => closeErrorMessage());
+  errorButton.addEventListener('click', () => ErrorMessageCloseHandler());
 
   closeMessage(messageTemplateError);
 };
