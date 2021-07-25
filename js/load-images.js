@@ -1,8 +1,8 @@
 const addImages = () => {
   const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-  const avatar = document.querySelector('#avatar');
+  const avatar = document.querySelector('.ad-form__field input[type=file]');
   const avatarPreview = document.querySelector('.ad-form-header__preview img');
-  const image = document.querySelector('#images');
+  const image = document.querySelector('.ad-form__upload input[type=file]');
   const imagePreview = document.querySelector('.ad-form__photo');
 
   const addImage = (inputFile, preview) => {
