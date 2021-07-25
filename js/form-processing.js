@@ -4,6 +4,10 @@ const infoAboutAdForm = document.querySelector('.ad-form');
 const filtersForm = document.querySelector('.map__filters');
 const guestCapacitySelect = document.querySelector('#capacity');
 const guestCapacityOptions = guestCapacitySelect.querySelectorAll('option');
+const avatarPreview = document.querySelector('.ad-form-header__preview img');
+const imagePreview = document.querySelector('.ad-form__photo');
+
+const DEFAULT_IMAGE = 'img/muffin-grey.svg';
 
 const addFormsLocking = () => {
   const addDisabled = (element) => {
@@ -153,6 +157,8 @@ const addFormValidation = () => {
 };
 
 const clearUserForm = () => {
+  avatarPreview.src = DEFAULT_IMAGE;
+  imagePreview.innerHTML = '';
   infoAboutAdForm.reset();
   resetMap();
   addDefaultCoordinates();
